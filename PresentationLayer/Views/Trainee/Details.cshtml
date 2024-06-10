@@ -1,0 +1,79 @@
+﻿@model List<TraineeViewModel>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    .trainee-table {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .trainee-table-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .trainee-table th,
+    .trainee-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+        text-align: center;
+    }
+
+    .trainee-table th {
+        color: #555;
+    }
+
+    .trainee-table td {
+        color: #333;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="trainee-table">
+                <h1 class="trainee-table-title">Trainees Information</h1>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Trainee Name</th>
+                            <th>Department</th>
+                            <th>Courses</th>
+                            <th>Degree</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var trainee in Model)
+                        {
+                            <tr>
+                                <td>@trainee.TraineeName</td>
+                                <td>@trainee.Deparment</td>
+                                <td>
+                                    @foreach (var course in trainee.Courses)
+                                    {
+                                        <p>@course.Course.Name</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var course in trainee.Courses)
+                                    {
+                                        <p>@course.Degree</p>
+                                    }
+                                </td>
+                                <td style="color:@trainee.Color;">@trainee.State</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

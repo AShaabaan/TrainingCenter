@@ -1,0 +1,55 @@
+﻿@model DepartmentViewModel
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    .details-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        text-align:center;
+    }
+
+    .details-list dt {
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 5px;
+        
+    }
+
+    .details-list dd {
+        margin-bottom: 20px;
+        color: #333;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="details-container">
+                <div class="details-title my-4">@ViewData["Title"]</div>
+                <dl class="details-list row">
+                    <dt class="col-sm-4">Department Name:</dt>
+                    <dd class="col-sm-8">@Model.Name</dd>
+                    <dt class="col-sm-4">Manager:</dt>
+                    <dd class="col-sm-8">@Model.Manager</dd>
+                </dl>
+                <div class="text-center">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

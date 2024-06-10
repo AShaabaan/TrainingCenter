@@ -1,0 +1,78 @@
+﻿@using Models
+@model List<Instractor>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    .instructor-table {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .instructor-table-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .instructor-table th,
+    .instructor-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+        text-align: center;
+    }
+
+    .instructor-table th {
+        color: #555;
+    }
+
+    .instructor-table td {
+        color: #333;
+    }
+
+    .instructor-table img {
+        max-width: 50px;
+        height: auto;
+        border-radius: 50%;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="instructor-table">
+                <h1 class="instructor-table-title">Instructors List</h1>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Salary</th>
+                            <th>Image</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.Address</td>
+                                <td>@item.Salary</td>
+                                <td><img src="@item.Image" alt="Instructor Image"></td>
+                                <td><a class="btn btn-info" href="/Instractor/Details/@item.Id">Details</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

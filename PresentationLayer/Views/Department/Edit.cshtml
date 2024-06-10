@@ -1,0 +1,45 @@
+﻿@model DepartmentViewModel
+
+@{
+    ViewData["Title"] = "Edit Department";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header bg-primary text-white text-center">@ViewData["Title"]</h5>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Department Name</label>
+                            <input asp-for="Name" class="form-control"/>
+                            <span asp-validation-for="Name" class="text-danger mb-3"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Manager" class="control-label">Manager</label>
+                            <input asp-for="Manager" class="form-control"/>
+                            <span asp-validation-for="Manager" class="text-danger mb-3"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
