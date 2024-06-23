@@ -63,6 +63,8 @@
                             <th>Salary</th>
                             <th>Image</th>
                             <th>Details</th>
+                            <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,6 +77,8 @@
                                 <td>@item.Salary</td>
                                 <td><img class="img" src="~/wwwroot/InstructorsImages/@item.Image" alt=""></td>
                                 <td><a class="btn btn-info" href="/Instractor/Details/@item.Id">Details</a></td>
+                                <td><a class="btn btn-warning" href="/Instractor/Update/@item.Id">Update</a></td>
+                                <td><a class="btn btn-danger" href="/Instractor/Delete/@item.Id">Delete</a></td>
                             </tr>
                         }
                     </tbody>

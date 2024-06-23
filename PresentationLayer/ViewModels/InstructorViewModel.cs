@@ -8,7 +8,7 @@ namespace PresentationLayer.ViewModels
 {
     public class InstructorViewModel
     {
-        
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100)]

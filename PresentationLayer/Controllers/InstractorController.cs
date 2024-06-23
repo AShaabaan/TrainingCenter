@@ -7,6 +7,8 @@ using PresentationLayer.Repository;
 using PresentationLayer.Repository.CourseRepo;
 using PresentationLayer.Repository.DepartmentRepo;
 using PresentationLayer.ViewModels;
+using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PresentationLayer.Controllers
 {
@@ -66,14 +68,6 @@ namespace PresentationLayer.Controllers
                 if (viewModel.Image != null)
                 {
 
-                    //string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                    //uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.Image.FileName;
-                    //string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    //using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    //{
-                    //    await viewModel.Image.CopyToAsync(fileStream);
-                    //}
-
                     IFormFile file = viewModel.Image as IFormFile;
                     string BinaryPath = Guid.NewGuid().ToString() + file.FileName;
                     string image = BinaryPath;
@@ -85,6 +79,7 @@ namespace PresentationLayer.Controllers
 
                     file.CopyTo(fs);
                     fs.Position = 0;
+
                     var instructor = new Instractor
                     {
                         Name = viewModel.Name,
@@ -105,12 +100,39 @@ namespace PresentationLayer.Controllers
 
             return View(viewModel);
         }
+        
 
+
+        public async Task <IActionResult> Update (int id) 
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instructor = await repository.GetByID(id);
+            if (instructor == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new InstructorViewModel
+            {
+                Name = instructor.Name,
+                Address = instructor.Address,
+                Salary = instructor.Salary,
+                Dept_ID = instructor.Dept_ID,
+                Crs_ID = instructor.Crs_ID,
+                Departments = new SelectList(await departmentRepositroy.GetAll(), "Id", "Name"),
+                Courses = new SelectList(await courseRepository.GetAll(), "Id", "Name")
+            };
+            return View(viewModel);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, Instractor instractor)
+        public async Task<IActionResult> Update(int id, InstructorViewModel viewModel)
         {
-            if (id != instractor.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -119,11 +141,45 @@ namespace PresentationLayer.Controllers
             {
                 try
                 {
-                    await repository.Update(id, instractor);
+                    var instructor = await repository.GetByID(id);
+
+                    if (viewModel.Image != null)
+                    {
+                        if (viewModel.Image.ContentType.ToLower() != "image/jpg" &&
+                            viewModel.Image.ContentType.ToLower() != "image/jpeg")
+                        {
+                            ModelState.AddModelError("ImageFile", "The image must be a JPG or PNG or Jpeg file.");
+                            viewModel.Departments = new SelectList
+                                                        (await departmentRepositroy.GetAll(), "Id", "Name");
+                            viewModel.Courses = new SelectList
+                                                        (await courseRepository.GetAll(), "Id", "Name");
+                            return View(viewModel);
+                        }
+
+                        IFormFile file = viewModel.Image as IFormFile;
+                        string BinaryPath = Guid.NewGuid().ToString() + file.FileName;
+                        string image = BinaryPath;
+
+                        FileStream fs = new FileStream(
+                          Path.Combine(Directory.GetCurrentDirectory(),
+                          "wwwroot", "InstructorsImages", BinaryPath)
+                          , FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+                        file.CopyTo(fs);
+                        fs.Position = 0;
+
+                        instructor.Name = viewModel.Name;
+                        instructor.Address = viewModel.Address;
+                        instructor.Salary = viewModel.Salary;
+                        instructor.Image = image;
+                        instructor.Dept_ID = viewModel.Dept_ID;
+                        instructor.Crs_ID = viewModel.Crs_ID;
+                        await repository.Update(id, instructor);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IsExists(instractor.Id))
+                    if (!IsExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -132,11 +188,10 @@ namespace PresentationLayer.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(instractor);
-        }
+            return RedirectToAction("Index");
 
+        }
         private bool IsExists(int id)
         {
             return (repository.IsExists(id));
