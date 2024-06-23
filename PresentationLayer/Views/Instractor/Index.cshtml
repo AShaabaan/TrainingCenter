@@ -37,8 +37,12 @@
 
     .instructor-table img {
         max-width: 50px;
-        height: auto;
-        border-radius: 50%;
+        height: 50px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-align: center;
     }
 </style>
 
@@ -47,6 +51,9 @@
         <div class="col-md-10">
             <div class="instructor-table">
                 <h1 class="instructor-table-title">Instructors List</h1>
+                <div class="text-center mb-4">
+                    <a asp-action="Create" class="btn btn-lg btn-success">Create New Instructor</a>
+                </div>
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
@@ -66,7 +73,7 @@
                                 <td>@item.Name</td>
                                 <td>@item.Address</td>
                                 <td>@item.Salary</td>
-                                <td><img src="@item.Image" alt="Instructor Image"></td>
+                                <td><img class="img" src="~/wwwroot/InstructorsImages/@item.Image" alt=""></td>
                                 <td><a class="btn btn-info" href="/Instractor/Details/@item.Id">Details</a></td>
                             </tr>
                         }

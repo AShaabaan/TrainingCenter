@@ -1,0 +1,65 @@
+﻿@model InstructorViewModel
+
+@{
+    ViewData["Title"] = "Create Instructor";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2>Create Instructor</h2>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Instructor Information</h4>
+                    <hr />
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Image" class="control-label"></label>
+                            <input asp-for="Image" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="control-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Salary" class="control-label"></label>
+                            <input asp-for="Salary" class="form-control" />
+                            <span asp-validation-for="Salary" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Dept_ID" class="control-label"></label>
+                            <select asp-for="Dept_ID" class="form-control" asp-items="Model.Departments"></select>
+                            <span asp-validation-for="Dept_ID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Crs_ID" class="control-label"></label>
+                            <select asp-for="Crs_ID" class="form-control" asp-items="Model.Courses"></select>
+                            <span asp-validation-for="Crs_ID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-success btn-lg">Create</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

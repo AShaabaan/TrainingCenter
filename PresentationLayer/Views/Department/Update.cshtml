@@ -1,7 +1,7 @@
 ﻿@model DepartmentViewModel
 
 @{
-    ViewData["Title"] = "Edit Department";
+    ViewData["Title"] = "Update Department";
 }
 
 <div class="container">
@@ -10,7 +10,7 @@
             <div class="card">
                 <h5 class="card-header bg-primary text-white text-center">@ViewData["Title"]</h5>
                 <div class="card-body">
-                    <form asp-action="Edit" method="post">
+                    <form asp-action="Update" method="post">
                         <div asp-validation-summary="All" class="text-danger mb-3"></div>
                         <input type="hidden" asp-for="Id" />
                         <div class="form-group">

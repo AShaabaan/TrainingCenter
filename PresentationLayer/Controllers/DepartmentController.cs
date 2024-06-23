@@ -78,7 +78,7 @@ namespace PresentationLayer.Controllers
             return View(department);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
             if (id == null || id == 0)
             {
@@ -98,7 +98,7 @@ namespace PresentationLayer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, DepartmentViewModel department)
+        public async Task<IActionResult> Update(int id, DepartmentViewModel department)
         {
             if (id != department.Id)
             {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
+using PresentationLayer.ViewModels;
 
 namespace PresentationLayer.Repository.InstractorRepo
 {
@@ -12,6 +13,19 @@ namespace PresentationLayer.Repository.InstractorRepo
         {
             context = _center;
         }
+
+        public async Task Create(Instractor instractor)
+        {
+            //Instractor NewInstructor = new Instractor();
+            //NewInstructor.Name = instractor.Name;
+            //NewInstructor.Address = instractor.Address;
+            //NewInstructor.Department.Id = instractor.Dept_ID;
+            //NewInstructor.Course.Id = instractor.Crs_ID;
+            //context.Add(NewInstructor);
+            context.Add(instractor);
+            context.SaveChanges();
+        }
+
         public async Task Delete(int id)
         {
             Instractor instractor = await GetByID(id);
@@ -22,6 +36,7 @@ namespace PresentationLayer.Repository.InstractorRepo
         public async Task<IEnumerable<Instractor>> GetAll()
         {
             return await context.Instractors.ToListAsync();
+           
         }
 
         public async Task<Instractor> GetByID(int id)
@@ -40,6 +55,11 @@ namespace PresentationLayer.Repository.InstractorRepo
             context.Update(OldInstractor);
             context.SaveChanges();
 
+        }
+
+        public bool IsExists(int id)
+        {
+            return (context.Department?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

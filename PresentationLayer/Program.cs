@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Models;
 using PresentationLayer.Helpers;
 using PresentationLayer.Repository;
+using PresentationLayer.Repository.CourseRepo;
 using PresentationLayer.Repository.DepartmentRepo;
 using PresentationLayer.Repository.InstractorRepo;
 namespace PresentationLayer
@@ -20,7 +22,8 @@ namespace PresentationLayer
             builder.Services.AddDbContext<Center>();
             builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();
             builder.Services.AddScoped<IInstractorRepository, InstractorRepository>();
-            builder.Services.AddScoped<IDepartmentRepositroy,DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentRepositroy, DepartmentRepository>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                             .AddEntityFrameworkStores<Center>();
             //builder.Services.AddAutoMapper(typeof(MapingProfiles));
@@ -33,10 +36,16 @@ namespace PresentationLayer
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                RequestPath = "/wwwroot",
+                FileProvider = new PhysicalFileProvider
+                //Get current Directory of machine 
+                (Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
+            });
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
 
             app.UseAuthorization();

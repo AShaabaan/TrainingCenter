@@ -1,5 +1,4 @@
-﻿@using Models
-@model Instractor
+﻿@model Instractor
 
 <style>
     .container {
@@ -39,7 +38,7 @@
         }
 
     .instructor-image {
-        max-width: 200px;
+        max-width: 100px;
         height: auto;
         display: block;
         margin: 0 auto;
@@ -49,12 +48,14 @@
     }
 </style>
 
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="instructor-details">
                 <h1 class="instructor-details-title text-center">Instructor Details</h1>
-                <img src="@Model.Image" alt="Instructor Image" class="instructor-image">
+                <img src="~/wwwroot/InstructorsImages/@Model.Image" alt="Instructor Image" class="instructor-image">
                 <table class="details-table">
                     <tr>
                         <th>Id</th>

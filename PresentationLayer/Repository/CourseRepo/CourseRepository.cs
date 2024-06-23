@@ -22,29 +22,40 @@ namespace PresentationLayer.Repository.CourseRepo
             return Task.CompletedTask;
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var Course = context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            context.Remove(Course);
+            context.SaveChanges();
         }
 
-        public Task<IEnumerable<Course>> GetAll()
+        public async Task<IEnumerable<Course>> GetAll()
         {
-            throw new NotImplementedException();
+            return await context.Courses.ToListAsync();
         }
 
-        public Task<Course> GetByID(int id)
+        public async Task<Course> GetByID(int id)
         {
-            throw new NotImplementedException();
+            return await context.Courses.SingleOrDefaultAsync(x => x.Id == id);
+
         }
 
         public bool IsExists(int id)
         {
-            throw new NotImplementedException();
+            return (context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
+
         }
 
-        public Task Update(int id, Course course)
+        public async Task Update(int id, CourseViewModel NewCourse)
         {
-            throw new NotImplementedException();
+            Course OldCourse= await GetByID(id);
+            OldCourse.Name = NewCourse.Name;
+            OldCourse.MinDegree = NewCourse.MinDegree;
+            OldCourse.Degree = NewCourse.Degree;
+            OldCourse.Dept_ID = NewCourse.Dept_ID;
+            context.Update(OldCourse);
+            context.SaveChanges();
+
         }
     }
 }
